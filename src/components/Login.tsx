@@ -1,6 +1,7 @@
 import React, { SyntheticEvent } from "react";
 import { User } from "../model/Model";
 import { AuthService } from "../services/AuthService";
+import history from "../utils/history";
 interface LoginProps {
   authService: AuthService;
   setUser: (user: User) => void;
@@ -27,6 +28,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
   private setPassword(event: CustomEvent) {
     this.setState({ password: event.target.value });
   }
+
   private async handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
     this.setState({ loginAttempted: true });
@@ -37,6 +39,7 @@ export class Login extends React.Component<LoginProps, LoginState> {
     if (result) {
       this.setState({ loginSuccesfull: true });
       this.props.setUser(result);
+      history.push("/profile");
     } else {
       this.setState({ loginSuccesfull: false });
     }
